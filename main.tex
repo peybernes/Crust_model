@@ -44,6 +44,43 @@
 
 \bibliographystyle{elsarticle-num}
 
+\newenvironment{legend}
+{\tabular{r>{\small} p{0.9\textwidth}}}
+{\endtabular}
+
+\newcommand{\n}{\tabularnewline}
+\newcolumntype{C}{>{\centering}X}
+\newcolumntype{L}{>{\raggedright}X}
+\newcolumntype{R}{>{\raggedleft}X}
+\newcolumntype{M}[1]{>{\centering}m{#1}}
+
+\newenvironment{remark}[1][\textit{Nota Bene}]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries \rule{1ex}{1ex} #1}]\ignorespaces}{\rule{1ex}{1ex} \end{trivlist}\ignorespacesafterend}
+
+% notations
+\newcommand{\T}{\texttt}
+\newcommand{\M}[1]{{\mathbb #1}}
+\newcommand{\Mb}[1]{{\mathbf #1}}
+\newcommand{\Mc}[1]{{\mathcal #1}}
+\newcommand{\Ms}[1]{{\mathcal{} #1}}
+\newcommand{\Hi}[1]{\underline{#1}}
+
+\newcommand{\Eq}[1]{Eq.~\ref{eq:#1}}
+\newcommand{\Eqs}[2]{Eqs.~\ref{eq:#1} and~\ref{eq:#2}}
+\newcommand{\Eqss}[3]{Eqs.~\ref{eq:#1},~\ref{eq:#2} and~\ref{eq:#3}}
+\newcommand{\Eqsss}[4]{Eqs.~\ref{eq:#1},~\ref{eq:#2},~\ref{eq:#3} and~\ref{eq:#4}}
+\newcommand{\Fig}[1]{Figure~\ref{fig:#1}}
+\newcommand{\Figs}[2]{Figures~\ref{fig:#1} and~\ref{fig:#2}}
+\newcommand{\Figss}[3]{Figures~\ref{fig:#1},~\ref{fig:#2} and~\ref{fig:#3}}
+\newcommand{\Tab}[1]{Table~\ref{tab:#1}}
+\newcommand{\Tabs}[2]{Tables~\ref{tab:#1} and~\ref{tab:#2}}
+\newcommand{\Tabss}[3]{Tables~\ref{tab:#1},~\ref{tab:#2} and~\ref{tab:#3}}
+\newcommand{\Sect}[1]{Section~\ref{sect:#1}}
+\newcommand{\Sects}[2]{Sections~\ref{sect:#1}~and~\ref{sect:#2}}
+\newcommand{\Sec}[1]{\Sect{#1}}
+\newcommand{\App}[1]{Appendix~\ref{app:#1}}
+
+\include{notations}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Definition du Titre et auteur(s) %%
@@ -184,9 +221,9 @@ Résumé
 
 \section{Introduction}
 \section{Modélisation}
-\subsection{Modèle thermique de croûte}
+\subsection{Modèle thermique de croûte} \label{sect:thermique}
 \input{ModeleCroute}
-\subsection{Traitement de la composition de la croûte et fermetures thermochimiques}
+\subsection{Traitement de la composition de la croûte et fermetures thermodynamiques} \label{sect:thermochimie}
 \input{ThermochimieCroute}
 \subsection{Couplage avec le bain de corium}
 \input{Couplage}
