@@ -15,29 +15,32 @@ Le domaine $\Omega_C$ est discrétisé en 1D selon la direction verticale (selon
     \item quelque soit l'épaisseur d'une couche du bain de corium, au moins une maille sera definie en face de cette couche
     \item  Il peut apparaître éventuellement au cours d'un calcul une autre partie de $\gamma_{in}$ située plus haut que le niveau supérieure du bain de corium liquide (e.g. lorsque le niveau du bain baisse, une partie de la croûte ne voit plus le corium liquide). Dans ce cas on considérera une condition adiabatique.
 \end{itemize}
-A chaque remaillage du domaine occupé par la croûte, une projection des masses et des températures est effectuée sur le nouveau maillage en assurant une conservation en masse et en énergie.
+A chaque remaillage du domaine occupé par la croûte, une projection des masses et des températures est effectuée sur le nouveau maillage en assurant une conservation en masse et en énergie (voir section \ref{couplage}).
 
 Les quantités moyennes suivantes sont introduites pour $1 \leq j\leq N_{mailles}$ :
 \begin{eqnarray}
 m_{j}(t) &=& \rho_C  V_j(t) \\
 \overline{T}_{j}(t) &=& \frac{1}{V_j(t)} \int_{C_j(t)} T_{j}(x,z,t)\,\mathrm{d}x\, \mathrm{d}z\\
+\overline{h}_j(t) &=& \frac{1}{m_j(t)} \int_{C_j(t)} h_j(x,z,t)\,\mathrm{d}x\, \mathrm{d}z\\
 \overline{\phi}_{j,in}(t) &=& -\frac{1}{S_j}\int_{\gamma_{in}\cap S_j}\lambda_C \frac{\partial T_{j}}{\partial x}(x=x_j^{min},z,t)\, \mathrm{d}z  \label{eq:phi_j_in}\\
-\overline{\phi}_{j,ext}(t) &=& -\frac{1}{S_j}\int_{\gamma_{in}\cap S_j}\lambda_C \frac{\partial T_{j}}{\partial x} (x=x_j^{max},z,t)\, \mathrm{d}z  \label{eq:phi_j_ext}
+\overline{\phi}_{j,ext}(t) &=& -\frac{1}{S_j}\int_{\gamma_{ext}\cap S_j}\lambda_C \frac{\partial T_{j}}{\partial x} (x=x_j^{max},z,t)\, \mathrm{d}z  \label{eq:phi_j_ext}
 \end{eqnarray}
-avec $T_{j}$ la température de la maille $j$ et $V_j$ le volume de la maille $j$.\\
+avec $T_{j}$ la température de la maille $j$, $h_j$ l'enthalpie spécifique et $V_j$ le volume de la maille $j$.\\
 
-L'évolution des masses et températures moyennes pour chaque maille $j$, $\left(m_{j}, \overline{T}_{j}\right)_{j\in[1, N_{mailles}]}$ est calculée sur un pas de temps entre $t$ et $t+\Delta t$ en résolvant le système :
+Le système (\ref{eq:mass})-(\ref{eq:enthalpie}) suivant donne l'évolution des masses et enthalpies spécifiques moyennes pour chaque maille $j$ :
 
-\begin{eqnarray*}
-\frac{dm_{j}}{dt} &=& - \frac{dm_{j}^\text{fus/sol}}{dt} \\ 
-m_{j} C_{p,C} \frac{d \overline{T}_{j}}{dt} &+& \frac{dm_{j}^\text{fus/sol}}{dt}C_{p,C} \left(T^{fus/sol} - \overline{T}_{j}\right) \\ &=& S_i\left(\overline{\phi}_{j,in} - \overline{\phi}_{j,ext}\right) + \dot{q}^m m_{j}
-\end{eqnarray*}
+\begin{eqnarray}
+\frac{dm_{j}}{dt} &=& - \frac{dm_{j}^\text{fus/sol}}{dt} \label{eq:mass} \\ 
+%m_{j} C_{p,C} \frac{d \overline{T}_{j}}{dt} &+& \frac{dm_{j}^\text{fus/sol}}{dt}C_{p,C} \left(T^{fus/sol} - \overline{T}_{j}\right) \\ &=& S_i\left(\overline{\phi}_{j,in} - \overline{\phi}_{j,ext}\right) + \dot{q}^m m_{j}
+ \frac{d}{dt}(m_{j}\overline{h}_{j}) - \frac{dm_{j}^\text{fus/sol}}{dt} \overline{h}_{\gamma_{in},j} & = & S_i\left(\overline{\phi}_{j,in} - \overline{\phi}_{j,ext}\right) + \dot{q}^m m_{j} \label{eq:enthalpie}
+\end{eqnarray}
 
 où :
 
 \begin{itemize}
  \item $\frac{dm_j^\text{fus/sol}}{dt}$ est le taux de masse ablatée dans le cas d'une fusion de la croûte ou le taux de masse solidifiée dans le cas d'une solidification du corium liquide. Ce taux de masse est positif dans le cas d'une fusion;
- \item $\dot{q}^m m$ représente la contribution de la puissance résiduelle (W) associée à la puissance résiduelle massique $\dot{q}^m$(W/kg);
+ \item $\overline{h}_{\gamma_{in},j}$ représente l'enthalpie spécifique à l’interface $\gamma_{in}$ ;
+ \item $\dot{q}^m m$ représente la contribution de la puissance résiduelle ($W$) associée à la puissance résiduelle massique $\dot{q}^m$ ($W/kg$);
 \end{itemize}
 Dans ce système, la conduction axiale (i.e. suivant l'axe $z$) a été négligée. Il est à noter qu'une option est disponible dans le code pour prendre en compte une approximation numérique de flux thermique axial (\cite{NENE2018}). 
 
@@ -45,33 +48,34 @@ Une maille $C_j$ peut être dans trois types "d'état" : soit elle est en fusion
 
 En fonction de la température de la frontière interne de la croûte $\gamma_{in}$, que l'on note $T_{j,in}$, les fermetures associées au système d'équations précédent sont différentes. Ci-dessous sont listés les différents cas de figure :\\
 
-{\it cas d'une pure conduction dans la croûte}\\
+\begin{itemize}
+\item {\it cas d'une pure conduction dans la croûte :}\\
 Tant que $T_{j,in}<T_{fus}$, la fusion de la maille de croûte $C_j$ n'a pas commencé :
 \begin{eqnarray*}
 \frac{dm_j^\text{fus/sol}}{dt} &=& 0.0 \\
 \overline{\phi}_{j,in} &=& \phi_{j,bain}
 \end{eqnarray*}
 
-{\it passage en fusion de la croûte}\\
+\item {\it passage en fusion de la croûte :}\\
 Si $T_{j,in}$ atteint la température $T_{fus}$ ($T_{j,in}\ge T_{fus}$), la fusion de la maille $C_j$ commence suivant l'équation de front de fusion suivante :
 \begin{eqnarray*}
 \Delta \mathcal{H}^{fus} \frac{dm_j^\text{fus/sol}}{dt} &=& S_j\left(\phi_{j,bain} - \overline{\phi}_{j,in}\right) \\
 T_{j,in} &=& T^{fus}
 \end{eqnarray*}
 
-{\it passage en solidification du corium}\\
+\item {\it passage en solidification du corium :}\\
 Si $T_{j,in}$ atteint la température $T^{sol}$ ($T_{j,in}\le T^sol$), la solidification du corium commence suivant l'équation du front de solidification suivante :
 \begin{eqnarray*}
 \Delta \mathcal{H}^{fus} \frac{dm_j^\text{fus/sol}}{dt} &=& S_j\left(\phi_{j,bain} - \overline{\phi}_{j,in}\right) \\
 T_j^{in} &=& T^{sol}
 \end{eqnarray*}
 
-{\it passage en conduction pure après un arrêt d'une fusion/solidification}\\
+\item {\it passage en conduction pure après un arrêt d'une fusion/solidification :}\\
 Lorsque une maille $C_j$ est en fusion ou solidification, si $\frac{dm_i^\text{fus/sol}}{dt}$ s'annule, le front de fusion/solidification s'arrête. Et ainsi la maille $C_j$ devient en "conduction pure" :
 \begin{eqnarray*}
 \frac{dm_j^\text{fus/sol}}{dt} &=& 0.0 \\
 \phi_j^{in} &=& \phi_{j,bain}
 \end{eqnarray*}
-
+\end{itemize}
 
 En pratique, selon l'état de la maille $C_j$, il est nécessaire de compléter également l'équation d'énergie par des lois de de fermeture pour les quantités $\overline{\phi}_{j,in}$ and $\overline{\phi}_{j,ext}$. Pour ce faire, un modèle 0D basé sur l'hypothèse d'un profil quadratique suivant l'axe $x$ de la température permet de déduire ces $\overline{\phi}_{j,in}$ and $\overline{\phi}_{j,ext}$ \cite{LeTellier2016}.
