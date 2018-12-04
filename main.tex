@@ -1,4 +1,5 @@
-\documentclass[12pt,a4paper,lmag,nt,article,french]{docDTN}
+%\documentclass[12pt,a4paper,lmag,nt,article,french]{docDTN}
+\documentclass[12pt,a4paper]{article}
 
 \usepackage{parskip}
 \usepackage{lineno,hyperref}
@@ -15,7 +16,7 @@
 \usepackage{amsmath,amssymb,pifont}
 \usepackage[mathscr]{eucal}
 %\usepackage{natbib}
-%\usepackage[english,french]{babel}
+\usepackage[english,french]{babel}
 \usepackage[utf8x]{inputenc}
 \usepackage{tikz}
 \usepackage{glossaries}
@@ -42,7 +43,6 @@
 
 % \setlength{\parindent}{10pt}
 
-\bibliographystyle{elsarticle-num}
 
 \newenvironment{legend}
 {\tabular{r>{\small} p{0.9\textwidth}}}
@@ -82,6 +82,7 @@
 
 \include{notations}
 
+\iffalse
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Definition du Titre et auteur(s) %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -216,22 +217,22 @@ Résumé
 \nolistoftables
 %\notimbre
 %%%%%
-
-  \begin{document}
-
+\fi
+\begin{document}
 \section{Introduction}
 \section{Modélisation}
 \subsection{Modèle thermique de croûte} \label{sect:thermique}
 \input{ModeleCroute}
 \subsection{Traitement de la composition de la croûte et fermetures thermodynamiques} \label{sect:thermochimie}
 \input{ThermochimieCroute}
-\subsection{Couplage avec le bain de corium}
+\subsection{Couplage avec le bain de corium}\label{couplage}
 \input{Couplage}
 \section{Résultats numériques}
 \input{ResultatsNumeriques}
-\section{conclusion}
+\section{Conclusion}
 \input{Conclusion.tex}
 
+\bibliographystyle{elsarticle-num}
 \bibliography{lma-jabref}
-
+>>>>>>> 8f2c2c49d81bbbc20c10a3225066dec1400405fd
 \end{document}
