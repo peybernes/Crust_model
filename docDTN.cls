@@ -393,7 +393,7 @@
   \dm@s@setTypeDocument{PUBLICATION}{PU}
   \dm@s@isPublicationtrue}
 
-\def\dm@s@ReferenceAName{R�f�rence}
+\def\dm@s@ReferenceAName{R\'ef\'erence}
   
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% AUTEURS
