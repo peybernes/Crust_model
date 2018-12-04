@@ -1,4 +1,5 @@
-\documentclass[12pt,a4paper,lmag,nt,article,french]{docDTN}
+%\documentclass[12pt,a4paper,lmag,nt,article,french]{docDTN}
+\documentclass[12pt,a4paper]{article}
 
 \usepackage{parskip}
 \usepackage{lineno,hyperref}
@@ -15,7 +16,7 @@
 \usepackage{amsmath,amssymb,pifont}
 \usepackage[mathscr]{eucal}
 %\usepackage{natbib}
-%\usepackage[english,french]{babel}
+\usepackage[english,french]{babel}
 \usepackage[utf8x]{inputenc}
 \usepackage{tikz}
 \usepackage{glossaries}
@@ -27,6 +28,7 @@
 \usepackage{placeins}
 
 
+\iffalse
 \renewcommand\arraystretch{1.5}
 
 \raggedbottom
@@ -42,7 +44,6 @@
 
 % \setlength{\parindent}{10pt}
 
-\bibliographystyle{elsarticle-num}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -179,12 +180,11 @@ Résumé
 \nolistoftables
 %\notimbre
 %%%%%
-
-  \begin{document}
-
+\fi
+\begin{document}
 \section{Introduction}
 \section{Modélisation}
-\subsection{modèle thermique de croûte}
+\subsection{Modèle thermique de croûte}
 \input{ModeleCroute}
 \subsection{Modélisation de la thermochimie dans la croûte}
 \input{ThermochimieCroute}
@@ -192,6 +192,8 @@ Résumé
 \input{Couplage}
 \section{Résultats numériques}
 \input{ResultatsNumeriques}
-\section{conclusion}
+\section{Conclusion}
 \input{Conclusion.tex}
+\bibliographystyle{elsarticle-num}
+\bibliography{lma-jabref}
 \end{document}
