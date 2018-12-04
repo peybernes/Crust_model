@@ -1,13 +1,14 @@
 
 Dans cette première version du modèle de croûte, la gestion de la composition des mailles de croûtes et des fermetures ``thermodynamiques''\footnote{thermodynamique au sens de la description du système multicomposant par le biais de son énergie de Gibbs, à la manière de la méthode CALPHAD \cite{Lukas2007}} est volontairement simplifiée tout en préservant, autant que faire se peut, une description qualitativement correcte. Autrement dit, cette première version du modèle n'intègrent pas tous les résultats et développements associés à l'action (par ailleurs initiée dans le cadre de la fiche ``Modélisation en Accidents Graves'' du projet CORIU) d'utilisation consistante et exhaustive des données thermodynamiques d'une base CALPHAD dans les modèles de fond de cuve. Ces choix, ainsi que les perspectives d'amélioration dans une future version de ce modèle, sont discutés dans ce paragraphe.
 
-Tout d'abord, la composition de la croûte (comme pour les différentes couches du bain ou des lits de débris) est décrite par le biais des fractions massiques des espèces \textit{i.e.} $\left(\avMassFraction[j]{}\right)_{j\in \speciesSet}$ où $\speciesSet$ est l'ensemble des espèces considérées.
+Tout d'abord, la composition de la croûte (comme pour les différentes couches du bain ou des lits de débris) est décrite par le biais des fractions massiques des espèces. Seule une composition moyenne pour chaque maille $j$  (\textit{i.e.} $\left(\avMassFraction[i]{j}\right)_{i\in \speciesSet}$ où $\speciesSet$ est l'ensemble des espèces considérées) est suivie.
 
-$\massEnthalpy{s}=\massEnthalpy[o]{} - \heatCp{s} \left(\temperature[fus.]{} - \temperature{s}\right)$ et $\massEnthalpy{l} = \heatCp{l} \left(\temperature{l} - \temperature[fus.]{}\right) + \dEnthalpy[fus.]{} + \massEnthalpy[o]{}$
+Ensuite, du point de vue de l'enthalpie spécifique, pour chaque maille $j$, elle est explicitement écrite en température :
+$\avMassEnthalpy{j} = \avMassEnthalpy[s]{j}=\massEnthalpy[o]{} - \heatCp[s]{j} \left(\temperature[fus]{} - \temperature{j}\right)$ et $\massEnthalpy[l]{j} = \heatCp{l} \left(\temperature{l} - \temperature[fus]{}\right) + \dEnthalpy[fus]{} + \massEnthalpy[o]{}$
 
 
 
-où, en pratique, $\speciesSet$
+%où, en pratique, $\speciesSet$
 
 
 \cite{Tiwari2018}

@@ -16,23 +16,23 @@
 \newcommand{\formula}[2]{\formulaWithUnits{#1}{#2}}
 % phase change enthalpy / enthalphie de changement de phase ou chaleur latente
 % J.kg^{-1}
-\newcommand{\dEnthalpy}[2][\null]{\Delta h_{#2}^{\textrm{#1}}}
+\newcommand{\dEnthalpy}[2][\null]{\Delta \Mc{H}_{#2}^{#1}}
 \newcommand{\dEnthalpyUnits}{\text{J.kg$^{-1}$}}
 % specific heat capacity / capacité thermique massique
 % J.kg^{-1}.K^{-1}
-\newcommand{\heatCp}[2][\null]{Cp_{#2}^{\textrm{#1}}}
+\newcommand{\heatCp}[2][\null]{Cp_{#2}^{{#1}}}
 \newcommand{\heatCpUnits}{\text{J.kg$^{-1}$.K$^{-1}$}}
 % mass flow rate / débit massique
 % kg.s ^-1
-\newcommand{\mFlowRate}[2][\null]{\dot{m}_{#2}^{\textrm{#1}}}
+\newcommand{\mFlowRate}[2][\null]{\dot{m}_{#2}^{{#1}}}
 \newcommand{\mFlowRateUnits}{\text{kg.s$ ^{-1}$}}
 % volumetric flow rate / débit massique
 % m^3.s ^-1
-\newcommand{\vFlowRate}[2][\null]{\dot{V}_{#2}^{\textrm{#1}}}
+\newcommand{\vFlowRate}[2][\null]{\dot{V}_{#2}^{{#1}}}
 \newcommand{\vFlowRateUnits}{\text{m$^3$.s$ ^{-1}$}}
 % power / puissance
 % W
-\newcommand{\power}[2][\null]{\dot{Q}_{#2}^{\textrm{#1}}}
+\newcommand{\power}[2][\null]{\dot{Q}_{#2}^{{#1}}}
 \newcommand{\powerUnits}{\text{W}}
 % mass power / puissance massique
 % W.kg^-1
@@ -44,16 +44,16 @@
 \newcommand{\volPowerUnits}{\text{W.m$^{-3}$}}
 % heat flux / flux de chaleur
 % W.m^-2
-\newcommand{\heatFlux}[2][\null]{\phi_{#2}^{\textrm{#1}}}
-\newcommand{\avHeatFlux}[2][\null]{\bar{\phi}_{#2}^{\textrm{#1}}}
+\newcommand{\heatFlux}[2][\null]{\phi_{#2}^{{#1}}}
+\newcommand{\avHeatFlux}[2][\null]{\bar{\phi}_{#2}^{{#1}}}
 \newcommand{\heatFluxUnits}{\text{W.m$^{-2}$}}
 % surface
 % m^{2}
-\newcommand{\area}[2][\null]{S_{#2}^{\textrm{#1}}}
+\newcommand{\area}[2][\null]{S_{#2}^{{#1}}}
 \newcommand{\areaUnits}{\text{m$^2$}}
 % mass / mass
 % kg
-\newcommand{\mass}[2][\null]{m_{#2}^{\textrm{#1}}}
+\newcommand{\mass}[2][\null]{m_{#2}^{{#1}}}
 \newcommand{\massUnits}{\text{kg}}
 % mass fraction / fraction massique
 % 
@@ -61,53 +61,53 @@
 \newcommand{\massFractionUnits}{}
 % mass enthalpy / enthalpie massique
 % 
-\newcommand{\massEnthalpy}[2][\null]{h_{#2}^\textrm{#1}}
+\newcommand{\massEnthalpy}[2][\null]{h_{#2}^{#1}}
 \newcommand{\massEnthalpyUnits}{\text{J.kg$^{-2}$}}
 % pressure
 % Pa
-\newcommand{\pressure}[2][\null]{p_{#2}^{\textrm{#1}}}
+\newcommand{\pressure}[2][\null]{p_{#2}^{{#1}}}
 \newcommand{\pressureUnits}{\text{Pa}}
 % temperature
 % K
-\newcommand{\temperature}[2][\null]{T_{#2}^{\textrm{#1}}}
+\newcommand{\temperature}[2][\null]{T_{#2}^{#1}}
 \newcommand{\temperatureUnits}{\text{K}}
 % porosity / porosité
 % none
-\newcommand{\porosity}[2][\null]{\varepsilon_{#2}^{\textrm{#1}}}
+\newcommand{\porosity}[2][\null]{\varepsilon_{#2}^{{#1}}}
 % mass density / densité massique
 % kg.m^{-3}
-\newcommand{\massDensity}[2][\null]{\rho_{#2}^{\textrm{#1}}}
+\newcommand{\massDensity}[2][\null]{\rho_{#2}^{{#1}}}
 \newcommand{\massDensityUnits}{\text{kg.m$^{-3}$}}
 % thermal conductivity / conductivité thermique
 % W.m^{-1}.K^{-1}
-\newcommand{\thermalCond}[2][\null]{\lambda_{#2}^{\textrm{#1}}}
+\newcommand{\thermalCond}[2][\null]{\lambda_{#2}^{{#1}}}
 \newcommand{\thermalCondUnits}{\text{W.m$^{-1}$.K$^{-1}$}}
 % dynamic viscosity / viscosité dynamique
 % Pa.s
-\newcommand{\dynamicVisc}[2][\null]{\mu_{#2}^{\textrm{#1}}}
+\newcommand{\dynamicVisc}[2][\null]{\mu_{#2}^{{#1}}}
 \newcommand{\dynamicViscUnits}{\text{Pa.s}}
 % thermal expansion coefficient / coefficient de dilatation isobare
 % K^{-1}
-\newcommand{\thermalExp}[2][\null]{\beta_{#2}^{\textrm{#1}}}
+\newcommand{\thermalExp}[2][\null]{\beta_{#2}^{{#1}}}
 \newcommand{\thermalExpUnits}{\text{K$^{-1}$}}
 % convective heat transfer coeffcient / coefficient de transfert de chaleur convectif
 % W.m^{-2}.K^{-1}
-\newcommand{\thermalConv}[2][\null]{h_{#2}^{\textrm{#1}}}
-\newcommand{\avThermalConv}[2][\null]{\bar{h}_{#2}^{\textrm{#1}}}
+\newcommand{\thermalConv}[2][\null]{h_{#2}^{{#1}}}
+\newcommand{\avThermalConv}[2][\null]{\bar{h}_{#2}^{{#1}}}
 \newcommand{\thermalConvUnits}{\text{W.m$^{-2}$.K$^{-1}$}}
 % Nusselt number / nombre de Nusselt
-\newcommand{\Nu}[2][\null]{Nu_{#2}^{\textrm{#1}}}
+\newcommand{\Nu}[2][\null]{Nu_{#2}^{{#1}}}
 % thermal conductivity / conductivité thermique
 % W.m^{-1}.K^{-1}
-\newcommand{\thermalDiff}[2][\null]{\alpha_{#2}^{\textrm{#1}}}
+\newcommand{\thermalDiff}[2][\null]{\alpha_{#2}^{{#1}}}
 \newcommand{\thermalDiffUnits}{\text{W.m$^{-1}$.K$^{-1}$}}
 % dynamic viscosity / viscosité dynamique
 % Pa.s
-\newcommand{\cinematicVisc}[2][\null]{\nu_{#2}^{\textrm{#1}}}
+\newcommand{\cinematicVisc}[2][\null]{\nu_{#2}^{{#1}}}
 \newcommand{\cinematicViscUnits}{\text{Pa.s}}
 % emissivity
 %
-\newcommand{\emissivity}[2][\null]{\epsilon_{#2}^{\textrm{#1}}}
+\newcommand{\emissivity}[2][\null]{\epsilon_{#2}^{{#1}}}
 \newcommand{\emissivityUnits}{\text{-}}
 
 \newcommand{\property}[2][\null]{p^{#1}_{#2}}
@@ -128,7 +128,7 @@
 \renewcommand{\heatFlux}[2][\null]{\phi^{#1}_{#2}}
 \renewcommand{\avHeatFlux}[2][\null]{\bar{\phi}^{#1}_{#2}}
 \newcommand{\avMassPower}[1]{\dot{q}_{#1}^{\textrm{mass}}}
-\newcommand{\avTemperature}[2][\null]{\bar{\temperature{}}_{#2}^{\textrm{#1}}}
+\newcommand{\avTemperature}[2][\null]{\bar{\temperature{}}_{#2}^{{#1}}}
 
 \newcommand{\speciesSet}[1][\null]{\Mc{S}_{#1}}
 \newcommand{\elementSet}[1][\null]{\Mc{E}_{#1}}
