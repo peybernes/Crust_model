@@ -32,13 +32,13 @@ Le système (\ref{eq:mass})-(\ref{eq:enthalpie}) suivant donne l'évolution des 
 \begin{eqnarray}
 \frac{dm_{j}}{dt} &=& - \frac{dm_{j}^\text{fus/sol}}{dt} \label{eq:mass} \\ 
 %m_{j} C_{p,C} \frac{d \overline{T}_{j}}{dt} &+& \frac{dm_{j}^\text{fus/sol}}{dt}C_{p,C} \left(T^{fus/sol} - \overline{T}_{j}\right) \\ &=& S_i\left(\overline{\phi}_{j,in} - \overline{\phi}_{j,ext}\right) + \dot{q}^m m_{j}
- \frac{d}{dt}(m_{j}\overline{h}_{j}) - \frac{dm_{j}^\text{fus/sol}}{dt} \overline{h}_{\gamma_{in},j} & = & S_i\left(\overline{\phi}_{j,in} - \overline{\phi}_{j,ext}\right) + \dot{q}^m m_{j} \label{eq:enthalpie}
+ \frac{d}{dt}(m_{j}\overline{h}_{j}) + \frac{dm_{j}^\text{fus/sol}}{dt} \overline{h}_{\gamma_{in},j} & = & S_i\left(\overline{\phi}_{j,in} - \overline{\phi}_{j,ext}\right) + \dot{q}^m m_{j} \label{eq:enthalpie}
 \end{eqnarray}
 
 où :
 
 \begin{itemize}
- \item $\frac{dm_j^\text{fus/sol}}{dt}$ est le taux de masse ablatée dans le cas d'une fusion de la croûte ou le taux de masse solidifiée dans le cas d'une solidification du corium liquide. Ce taux de masse est positif dans le cas d'une fusion;
+ \item $\frac{dm_j^\text{fus/sol}}{dt}$ est le taux de masse ablatée dans le cas d'une fusion de la croûte ou le taux de masse solidifiée dans le cas d'une solidification du corium liquide. Ce taux de masse est positif dans le cas d'une fusion et négatif dans le cas d'une solidification;
  \item $\overline{h}_{\gamma_{in},j}$ représente l'enthalpie spécifique à l’interface $\gamma_{in}$ ;
  \item $\dot{q}^m m$ représente la contribution de la puissance résiduelle ($W$) associée à la puissance résiduelle massique $\dot{q}^m$ ($W/kg$);
 \end{itemize}
