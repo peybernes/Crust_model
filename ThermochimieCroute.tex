@@ -1,14 +1,47 @@
 
-Dans cette première version du modèle de croûte, la gestion de la composition des mailles de croûtes et des fermetures ``thermodynamiques''\footnote{thermodynamique au sens de la description du système multicomposant par le biais de son énergie de Gibbs, à la manière de la méthode CALPHAD \cite{Lukas2007}} est volontairement simplifiée tout en préservant, autant que faire se peut, une description qualitativement correcte. Autrement dit, cette première version du modèle n'intègrent pas tous les résultats et développements associés à l'action (par ailleurs initiée dans le cadre de la fiche ``Modélisation en Accidents Graves'' du projet CORIU) d'utilisation consistante et exhaustive des données thermodynamiques d'une base CALPHAD dans les modèles de fond de cuve. Ces choix, ainsi que les perspectives d'amélioration dans une future version de ce modèle, sont discutés dans ce paragraphe.
+Dans cette première version du modèle de croûte, la gestion de la composition des mailles de croûtes et des fermetures ``thermodynamiques''\footnote{thermodynamique au sens de la description du système multicomposant par le biais de son énergie de Gibbs, à la manière de la méthode CALPHAD \cite{Lukas2007}} est volontairement simplifiée tout en préservant, autant que faire se peut, une description qualitativement correcte. Autrement dit, cette première version du modèle n'intègrent pas tous les résultats et développements associés à l'action (par ailleurs initiée dans le cadre de la fiche ``Modélisation en Accidents Graves'' du projet CORIU) d'utilisation consistante et exhaustive des données thermodynamiques d'une base CALPHAD dans les modèles de fond de cuve (voir \cite{LeTellier2016b,Tiwari2018,LeTellier2019}. Ces choix, ainsi que les perspectives d'amélioration dans une future version de ce modèle, sont discutés dans ce paragraphe.
 
-Tout d'abord, la composition de la croûte (comme pour les différentes couches du bain ou des lits de débris) est décrite par le biais des fractions massiques des espèces. Seule une composition moyenne pour chaque maille $j$  (\textit{i.e.} $\left(\avMassFraction[i]{j}\right)_{i\in \speciesSet}$ où $\speciesSet$ est l'ensemble des espèces considérées) est suivie.
+Tout d'abord, la composition de la croûte (comme pour les différentes couches du bain ou des lits de débris) est décrite par le biais des fractions massiques des espèces. Seule une composition moyenne pour chaque maille $j$  (\textit{i.e.} $\left(\avMassFraction[i]{j}\right)_{i\in \speciesSet}$ où $\speciesSet$ est l'ensemble des espèces considérées) est suivie. La composition en éléments associée est notée $\left(\elementMassFraction[j]{}\right)_{i\in\elementSet}$.
 
-Ensuite, du point de vue de l'enthalpie spécifique, pour chaque maille $j$, elle est explicitement écrite en température :
-$\avMassEnthalpy{j} = \avMassEnthalpy[s]{j}=\massEnthalpy[o]{} - \heatCp[s]{j} \left(\temperature[fus]{} - \temperature{j}\right)$ et $\massEnthalpy[l]{j} = \heatCp{l} \left(\temperature{l} - \temperature[fus]{}\right) + \dEnthalpy[fus]{} + \massEnthalpy[o]{}$
+Ensuite, du point de vue de l'enthalpie spécifique $\avMassEnthalpy{j}$, pour chaque maille $j$, elle est explicitement écrite en température et correspond formellement à la description suivante des enthalpies spécifiques du solide $\avMassEnthalpy[s]{j}$ et du liquide $\massEnthalpy[l]{j}$ associées à ce matériau :
+\begin{eqnarray}
+ \avMassEnthalpy{j} \left(\temperature{}\right) = \avMassEnthalpy[s]{j} \left(\temperature{}\right) &=& \massEnthalpy[o]{} - \heatCp[s]{j} \left(\temperature[fus]{j} - \temperature{}\right) \\
+ \massEnthalpy[l]{j} \left(\temperature{}\right) &=& \heatCp[l]{j} \left(\temperature{} - \temperature[fus]{}\right) + \dEnthalpy[fus]{j} + \massEnthalpy[o]{}
+\end{eqnarray}
+où $\massEnthalpy[o]{}$ est une enthalpie de référence et les capacités calorifiques $\heatCp[s]{j}$, $\heatCp[l]{j}$ et la chaleur latente de fusion $\dEnthalpy[fus]{j}$ sont évaluées, comme pour les phases du bain de corium ou les débris, par le biais de l'interface disponible dans PROCOR aux lois de propriétés physiques par espèces et des lois de mélanges implantées TOLBIAC-ICB.
 
+Pour ce qui est des températures de solidification $\temperature[sol]{l(j)}$ et de fusion $\temperature[fus]{j}$ associées aux possibles changement de condition à l'interface entre la maille $j$ et la couche du bain correspondante $l(j)$ (voir \Sect{thermique}), on considère que :
+\begin{itemize}
+ \item la fusion de la maille $j$ a lieu à $\temperature[fus]{j}=\Mc{T}_{liq}\left(\elementMassFraction[j]{}\right)_{i\in\elementSet}$, la température de liquidus associée à la composition élementaire de la maille de croûte $j$ ;
+ \item la solidification de la couche $l(j)$ a lieu à $\temperature[sol]{l(j)}=\Mc{T}_{liq}\left(\elementMassFraction[l(j)]{}\right)_{i\in\elementSet}$, la température de liquidus associée à la composition élementaire de la couche du bain $l(j)$.
+\end{itemize}
+Lorsque la solidification a lieu, la composition du solide formé est prise égale à celle de la couche liquide. 
 
+Ce traitement simplifié des fermetures thermodynamiques relatives à l'interface bain/croûte diffère de celles obtenues sous l'hypothèse d'équilibre local dans le modèle consistant avec une base CALPHAD décrit dans \cite{Tiwari2018}. Comme évoqué plus haut, cette simplification est volontaire à ce stade du développement et du test de ce modèle de croûte. Ainsi, le ``branchement'' dans ce modèle de l'équation d'état dédiée au corium en cuve construite dans le cadre de la fiche ``Modélisation en Accidents Graves'' se fera dans un second temps. Pour autant, par un choix adéquat des températures de liquidus, ce traitement simplifié permet de conserver qualitativement (et très probablement quantitativement, au premier ordre) le comportement attendu du couplage entre ce modèle de croûte et le modèle de bain stratifié.
 
-%où, en pratique, $\speciesSet$
+Pour discuter le choix de ces fermetures associées aux températures de liquidus, quelques calculs d'équilibre thermodynamique réalisés pour différents mélanges entre du corium sous-oxydé (système U-O-Zr) et de l'acier (ici réduit à Fe) sont présentés au \Tab{liquidus} ; les mélanges retenus sont typiques des compositions rencontrées pour les réacteurs à eau pressurisée. Les calculs ont été réalisés avec Open-Calphad pour le système quaternaire U-O-Zr-Fe tel que décrit dans la base NUCLEA'09. En plus de la température de liquidus relative à l'inventaire complet (noté ``global'' au \Tab{liquidus}), les températures de liquidus des deux phases liquides (une ``oxyde'' et une ``métal'') prédites par un calcul d'équilibre à 2900K (température à laquelle toutes ces compositions sont dans la lacune de miscibilité liquide du système U-O-Zr-Fe) ont été évalués. De manière cohérente, pour chaque composition, les températures de liquidus pour ``global'', ``oxyde'' et ``métal'' sont quasiment identiques et toujours associées à l'apparition de la phase solide cubique face centrée (U,Zr)O$_{2-x}$.
 
+\emph{@discuter : fraction massique O dans métal faible : sous l'hypothèse d'équilibre local, solidification d'une phase réfractaire à l'interface très limitée ($<2$kg par tonne de liquide) ; ensuite, quand O ``épuisé'', solidification à une température beaucoup plus base d'une phase intermétallique (laves). Fermeture simplifiée : Tliquidus ~ 1500-1600K. Dans les calculs de rétention en cuve, pas de solidification à l'interface des phases métalliques}
 
-\cite{Tiwari2018}
+\begin{table}[H]
+\caption{Températures de liquidus et compositions associées à des calculs d'équilibre thermodynamique dans la lacune de miscibilité à 2900K}\label{tab:liquidus}
+ \begin{tabularx}{\textwidth}{|c|c|C|C|C|C|} \cline{3-6}
+ \multicolumn{2}{c|}{} & \multicolumn{2}{c|}{$R_{U/Zr}=1.2$ et $C_{Zr}=0.3$} & \multicolumn{2}{c|}{$R_{U/Zr}=1.2$ et $C_{Zr}=0.3$} \n \hline
+ \multicolumn{2}{|c|}{$x_{steel}$} & $0.2^\dagger$ & $0.5^\ddagger$ & $0.05^\dagger$ & $0.2^\ddagger$ \n \hline
+ \multirow{4}{*}{\rotatebox{90}{$\Mc{T}_{liq}$ (K)}} & global & 2831 & 2843 & 2841 & 2853 \n
+  & oxyde  & 2830 & 2843 & 2841 & 2853 \n
+  & métal  & 2829 & 2842 & 2840 & 2852 \n
+  & métal sans O & 1620 & 1479 & 1581 & 1547 \n \hline
+ \multirow{4}{*}{\rotatebox{90}{métal}} & $\elementMassFraction[U]{}$ & 0.416 & 0.278 & 0.389 & 0.252 \n  
+ & $\elementMassFraction[Zr]{}$ & 0.115 & 0.070 & 0.101 & 0.057 \n  
+ & $\elementMassFraction[O]{}$ & 0.003 & 0.003 & 0.003 & 0.002 \n  
+ & $\elementMassFraction[Fe]{}$ & 0.466 & 0.649 & 0.507 & 0.689 \n  \hline
+ \end{tabularx}
+ \begin{legend}
+  $R_{U/Zr}$ & rapport molaire U/Zr \n
+  $C_{Zr}$ & degré d'oxydation molaire du Zr \n
+  $x_{steel}$ & rapport massique entre acier et coriul sous-oxydé \n
+  $^\dagger$ & en-dessous du seuil d'inversion de stratification \n
+  $^\ddagger$ & au-dessus du seuil d'inversion de stratification
+ \end{legend}
+\end{table}
