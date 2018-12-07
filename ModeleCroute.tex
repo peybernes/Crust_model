@@ -85,13 +85,15 @@ Lorsque une maille $C_j$ est en fusion ou solidification, si $\frac{dm_i^\text{f
 Lors de la résolution, selon l'état de la maille $C_j$, il est nécessaire de compléter également l'équation d'énergie par des lois de de fermeture pour les quantités $\overline{\phi}_{j,in}$ et $\overline{\phi}_{j,ext}$. Pour ce faire, un modèle 0D basé sur l'hypothèse d'un profil quadratique suivant l'axe $x$ de la température permet de déduire ces flux $\overline{\phi}_{j,in}$ et $\overline{\phi}_{j,ext}$ \cite{LeTellier2016}.\\
 
 {\it Remarque :}
-En pratique, à l'initialisation d'un calcul, un maillage de la croûte est défini à partir du nombre de mailles imposé par l'utilisateur et de la stratification du bain de corium. L'algorithme actuel ne prévoit pas d'avoir des mailles de croûte ne contenant aucun matériau. Ainsi, à l'initialisation d'un calcul ou lorsque une nouvelle maille de croûte apparaît en cours de calcul suite à une modification de la hauteur du bain, cette nouvelle maille de croûte est occupée par un "résidu" de matériau dont la composition est donnée par la couche du bain de corium en face de cette maille. Initialement, l'épaisseur de la maille $e^0$ est fixée par l'utilisateur. La masse $m_j^0$ est déduite à partir de cette épaisseur et de la densité du matériau. Concernant la température, on suppose qu'à l'initialisation de la maille de croûte, elle correspond à un état stationnaire avec ainsi un profil quadratique de la forme : 
+En pratique, à l'initialisation d'un calcul, un maillage de la croûte est défini à partir du nombre de mailles imposé par l'utilisateur et de la stratification du bain de corium. L'algorithme actuel ne prévoit pas d'avoir des mailles de croûte ne contenant aucun matériau. Ainsi, à l'initialisation d'un calcul ou lorsque une nouvelle maille de croûte apparaît en cours de calcul suite à une modification de la hauteur du bain, cette nouvelle maille de croûte est occupée par un "résidu" de matériau dont la composition est donnée par la couche du bain de corium en face de cette maille. Initialement, l'épaisseur de la maille $e^0$ est fixée par l'utilisateur. La masse $m_j^0$ est déduite à partir de cette épaisseur et de la densité du matériau. On suppose qu'à l'initialisation de la maille de croûte la température a un profil quadratique de la forme : 
 $$T_j(x)=ax^2+bx+c.$$
-A partir de l'équation de chaleur vérifiée en stationnaire et des deux conditions aux limites en $x=x_j^{min}=0$ et $x=e^0$, les coefficients $a$, $b$ et $c$ sont calculés. Par exemple pour une température fixée côté cuve en $x=0$ $(T_j^{ext})$ et une température de fusion fixée $T_j^{fus}$ en $x=e^0$ côté bain, ces coefficients obtenus prennent la forme :
+En plus des deux conditions limites en $x=x_j^{min}=0$ et $x=e^0$ en température, on impose un flux de chaleur externe nul, i.e. $\frac{\mathrm{d}T_j}{\mathrm{d}x}(x_j^{min}) = 0$.
+
+À partir de ces trois contraintes, les coefficients $a$, $b$ et $c$ sont calculés. Par exemple pour une température fixée côté cuve en $x=0$ $(T_j^{ext})$ et une température de fusion fixée $T_j^{fus}$ en $x=e^0$ côté bain, ces coefficients obtenus prennent la forme :
 \begin{eqnarray*}
 c &=& T^{ext}_j \\
-b &=& \frac{T_j^{fus}-T^{ext}_j}{e^0}+\frac{\dot{q}^m m_j^0}{2\lambda_j^s S_j} \\
-a &=& -\frac{\dot{q}^m m_j^0}{2\lambda_j^s e^0 S_j}
+b &=& 0 \\
+a &=& \frac{T_j^{fus}-T^{ext}_j}{({e^0})^2}
 \end{eqnarray*}
 
 La température moyenne initiale de la maille $j$ est ainsi donnée par :
