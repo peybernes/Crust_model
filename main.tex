@@ -1,5 +1,5 @@
-%\documentclass[12pt,a4paper,lmag,nt,article,french]{docDTN}
-\documentclass[12pt,a4paper]{article}
+\documentclass[12pt,a4paper,lmag,nt,article,french]{docDTN}
+%\documentclass[12pt,a4paper]{article}
 
 \usepackage{parskip}
 \usepackage{lineno,hyperref}
@@ -16,7 +16,7 @@
 \usepackage{amsmath,amssymb,pifont,amsfonts,bbm}
 \usepackage[mathscr]{eucal}
 %\usepackage{natbib}
-\usepackage[english,french]{babel}
+%\usepackage[english,french]{babel}
 \usepackage[utf8x]{inputenc}
 \usepackage{tikz}
 \usepackage{glossaries}
@@ -43,6 +43,7 @@
 
 % \setlength{\parindent}{10pt}
 
+\bibliographystyle{elsarticle-num}
 
 \newenvironment{legend}
 {\tabular{r>{\small} p{0.9\textwidth}}}
@@ -82,7 +83,7 @@
 
 \include{notations}
 
-\iffalse
+%\iffalse
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Definition du Titre et auteur(s) %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -118,7 +119,7 @@
 %% Definition d'un jalon (oui ou non) et de son intitule  %%
 %% pour le cadre de la page 2 (2 champs ci-dessous)       %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
- %\setjalon{XXX}{XX}       
+ \setjalon{COB}{Modélisation des croûtes du bain de corium dans la plate-forme PROCOR V2.3}       
 %%
 %% Indices 
 %%  
@@ -126,7 +127,7 @@
 %% Definition de la date du document indice A %%
 %% pour le cadre de la page 2                 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\setindiceAdate{xx/12/2018}       
+\setindiceAdate{10/12/2018}       
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Definition de la date du document et nature de l'evolution %%
 %% de l'indice B pour le cadre de la page 2                   %%
@@ -153,12 +154,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Definition des mots clefs de la page 3  %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\setmotscles{corium en cuve, stratification, instabilités de Rayleigh-Taylor, champ de phase, CALPHAD}
+\setmotscles{corium en cuve, croûte, bain de corium, couplage}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Definition du resume de la page 3       %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \setresume{
-Résumé 
+\input{resume} 
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Definition du resume DO de la page 3    %%
@@ -217,7 +218,7 @@ Résumé
 \nolistoftables
 %\notimbre
 %%%%%
-\fi
+%\fi
 \begin{document}
 \section{Introduction} \label{sect:introduction}
 \input{Introduction.tex}
