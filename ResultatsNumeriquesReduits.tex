@@ -1,47 +1,42 @@
-Le couplage entre le modèle du bain de corium et le modèle de croûte est testé au travers de deux transitoires détaillés ci-après dans les deux premières sections. Dans la dernière section, des cas de tests des problèmes identifiés au travers du second transitoire sont décrits.
+Sont présentés ici les résultats d'un test de vérification du modèle qui en illustre les principales caractéristiques. Le couplage entre le modèle du bain de corium et le modèle de croûte est testé au travers de deux transitoires détaillés ci-après dans les deux premières sections. Dans la dernière section, des cas de tests des problèmes identifiés au travers du second transitoire sont décrits. Notons bien qu'il ne s'agit pas d'un cas d'application réacteur et que certains des conditions de ce calcul ont été choisies dans une logique de test ``unitaire'', pour, à la fois, amener le modèle dans ses différents états possibles et, à la fois, faciliter la vérification de son bon comportement. En conséquence, aucune comparaison au modèle de bain initial de PROCOR avec une croûte ``fictive'' n'est ici rapportée. Ce travail reste à faire et le sera en 2019 dans le cadre du projet IVMR avec une reprise des benchmarks étudiés dans \cite{Carenini2019} et une nouvelle série de calculs réacteurs dans le WP2.5.
 
 \subsection{Première partie du transitoire}
-Le bain initial correspond à un bain oxyde avec une masse initiale de 10t, une température initiale de 2900 K et une composition en fractions massiques de 0.77 UO$_2$ - 0.12 Zr - 0.11 ZrO$_2$ (ratio molaire $R_{U/Zr}$ = 1.3 et degré  d'oxydation du zirconium $C_{Zr}$ = 30 \%). La puissance résiduelle massique est constante à $200$ W par kg d'uranium. La température de liquidus de l'oxyde est de 3000 K. Les corrélations d'échange de chaleur par les surfaces haute et latérale sont les corrélations Bali (voir~\cite{Bonnet1999} ou~\cite{Tourniaire2009a} pour plus de détails sur les corrélations). 
+Le bain initial correspond à un bain oxyde avec une masse initiale de 10t, une température initiale de 2900 K et une composition en fractions massiques de 0.77 UO$_2$ - 0.12 Zr - 0.11 ZrO$_2$ (ratio molaire $R_{U/Zr}$ = 1.3 et degré  d'oxydation du zirconium $C_{Zr}$ = 30 \%). La puissance résiduelle massique est constante à $200$ W par kg d'uranium. La température de liquidus de l'oxyde est de 3000 K. Les corrélations d'échange de chaleur par les surfaces haute et latérale sont les corrélations Bali (voir~\cite{Bonnet1999} ou~\cite{Tourniaire2009a} pour plus de détails sur les corrélations). Enfin, un profil de flux plat est utilisé pour la distribution latérale de flux de la couche oxyde du bain pour la projection du flux sur les mailles de le croûte (voir section~\ref{sect:couplage}).
 
-Enfin, la croûte est divisée, tout au long du calcul, en 20 mailles. L'épaisseur de croûte ``résiduelle'' à son apparition est fixée à 5 mm. Une température constante et uniforme de 1600 K est imposée sur les parois extérieures de la croûte (seul le couplage entre le modèle de bain de corium et le modèle de croûte sont testés ici).
+La croûte est divisée, tout au long du calcul, en 20 mailles. L'épaisseur de croûte ``résiduelle'' à son apparition est fixée à 5 mm. Une température constante et uniforme de 1600 K est imposée sur les parois extérieures de la croûte (seul le couplage entre le modèle de bain de corium et le modèle de croûte sont testés ici).
 
-Le couplage entre le bain de corium et la croûte est résolu
-Un temps de simulation suffisamment long a été imposé pour permettre au bain d'atteindre un état thermique quasi-stationnaire.
+Le couplage entre le bain de corium et la croûte est résolu explicitement en temps avec un macro pas de temps de 100 s. Suffisamment de macro pas de temps sont calculés à partir de l'instant initial t = 0 s pour permettre au bain d'atteindre un état thermique quasi-stationnaire.
 
+Durant les différentes étapes du transitoire, de la masse est échangée entre le bain de corium et sa croûte par solidification du bain ou fusion de la croûte. Une attention particulière a été portée pour que le volume de la croûte soit bien pris en compte pour le calcul du volume qu'occupe le bain de corium en fond de cuve de sorte que, le déplacement du niveau haut du bain associé à la solidification/fusion de la croûte (effet de densité) est faible.
 
-
-% Par la suite, les premiers macro pas de temps du calcul ne seront pas considérés. L'initialisation thermique de la croûte expliquée dans la section~\ref{sect:thermique} permet effectivement d'obtenir un flux externe de croûte initialement nul. Néanmoins, la configuration du couplage thermique entre le bain de corium et la croûte amène le modèle de conduction 0D utilisé à sur-évaluer ce flux externe sur les pas de temps suivants. Néanmoins, au bout de quelques pas de temps (après épaississement de la croûte), le modèle de conduction évalue correctement les différents flux de chaleur de la croûte. Ces difficultés liées au modèle de conduction utilisé dans PROCOR ont déjà été identifiées dans une étude sur la prise en compte de la conduction axiale dans ce modèle dans~\cite{Peybernes2018} et des travaux sont en cours pour les soulever.
-
-Durant les différentes étapes du transitoire, de la masse est échangée entre le bain de corium et sa croûte par solidification du bain ou fusion de la croûte. On notera que, comme le montre la figure~\ref{fig:stratification_bains}, le volume de la croûte est bien pris en compte pour le calcul du volume qu'occupe le bain de corium en fond de cuve de sorte que, le déplacement du niveau haut du bain associé à la solidification/fusion de la croûte (effet de densité) est faible.
-
-La figure~\ref{fig:mass_balance} donne les masses des différentes couches du bain de corium et la masse globale de croûte.
+La figure~\ref{fig:mass_balance} donne les masses du bain de corium et la masse globale de croûte.
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.85\textwidth, keepaspectratio=true]{Figures/mass_balance.eps}\\
-\caption{Masses de la croûte et des couches du bain}
+\caption{Masses de la croûte et de la couche oxyde du bain}
 \label{fig:mass_balance}
 \end{figure}
 À chaque macro pas de temps du calcul et en fin de calcul, \emph{on vérifie bien la conservation de la masse globale du système}.
 
-De la même manière, de l'énergie est échangée entre le bain de corium et la croûte et \emph{on vérifie la conservation globale de l'énergie du système}. La figure~\ref{fig:thermal_balance} donne les différentes puissances d'intérêt du bain de corium et de la croûte au cours du transitoire : les puissances évacuées par les surfaces latérales des différentes couches du bain $\bar{\phi}^{lat}_\textrm{HM.}S^{lat}_\textrm{HM.}$, $\bar{\phi}^{lat}_\textrm{OX.}S^{lat}_\textrm{OX.}$ et par sa surface supérieure $\bar{\phi}^{up}_\textrm{OX.}S^{up}_\textrm{OX.}$, la somme des puissances résiduelles des couches du bain $Q_\textrm{OX.}+Q_\textrm{HM.}$ ainsi que la somme des puissances résiduelles $Q_{C_j}$ des mailles $C_j$ de la croûte, et enfin la somme des puissances $\bar{\phi}_{j,ext}S_{j,ext}$ évacuées par la surface extérieure $\gamma_{ext}$ des mailles $C_j$ de la croûte.
+De la même manière, de l'énergie est échangée entre le bain de corium et la croûte et \emph{on vérifie la conservation globale de l'énergie du système}. La figure~\ref{fig:thermal_balance} donne les différentes puissances d'intérêt du bain de corium et de la croûte au cours du transitoire : les puissances évacuées par la surface latérale de la couche oxyde du bain $\bar{\phi}^{lat}_\textrm{OX.}S^{lat}_\textrm{OX.}$ et par sa surface supérieure $\bar{\phi}^{up}_\textrm{OX.}S^{up}_\textrm{OX.}$, la puissance résiduelle de la couche oxyde du bain $Q_\textrm{OX.}$ ainsi que la somme des puissances résiduelles $Q_{C_j}$ des mailles $C_j$ de la croûte, et enfin la somme des puissances $\bar{\phi}_{j,ext}S_{j,ext}$ évacuées par la surface extérieure $\gamma_{ext}$ des mailles $C_j$ de la croûte.
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.85\textwidth, keepaspectratio=true]{Figures/thermal_balance.eps}\\
 \caption{Puissances d'intérêt du système bain de corium et croûte}
 \label{fig:thermal_balance}
 \end{figure}
-La conservation de l'énergie peut être vérifiée graphiquement dans la figure~\ref{fig:thermal_balance} aux deux états quasi-stationnaires atteints. Par exemple, pour t=15 000 s, on a :
+La conservation de l'énergie peut être vérifiée graphiquement dans la figure~\ref{fig:thermal_balance} à l'état quasi-stationnaire atteint. Pour t=15 000 s, on vérifie bien que
 \begin{equation}
 \bar{\phi}^{up}_\textrm{OX.}S^{up}_\textrm{OX.} + \bar{\phi}_{j,ext}S_{j,ext} = Q_\textrm{OX.} + \sum_j Q_{C_j}.
 \end{equation}
 
-Durant le transitoire, les mailles de la croûte passent dans les différents états décrits dans la section~\ref{sect:thermique} (solidification, conduction et fusion). En particulier, pour la première partie du transitoire pour t $\leq$ 15 000 s, la croûte se solidifie jusqu'à atteindre un état quasi-stationnaire de solidification (voir figure~\ref{fig:croutes_1}) et, conformément au choix d'un profil uniforme de flux, l'épaisseur de la croûte est, elle aussi uniforme.
+Durant le transitoire du couplage, les mailles de la croûte sont directement en était de solidification (voir la section~\ref{sect:thermique} pour la description des différents états solidification, conduction et fusion). La croûte se solidifie jusqu'à atteindre un état quasi-stationnaire de solidification (voir figure~\ref{fig:croutes_1}) et, conformément au choix d'un profil uniforme de flux, l'épaisseur de la croûte est, elle aussi uniforme.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=\textwidth, keepaspectratio=true]{Figures/croute_100.png}\\
-\includegraphics[width=\textwidth, keepaspectratio=true]{Figures/croute_15000.png}
-\caption{Croûte à t = 100 s (en haut) et à t = 15 000 s (en bas). \textit{L'indice dans la maille $C_j$ donne la couche de bain en face de celle-ci : 0 $\Leftrightarrow$ HM., 1 $\Leftrightarrow$ OX.}}
+\includegraphics[width=\textwidth, keepaspectratio=true]{Figures/coriumCrust_100.png}\\
+\includegraphics[width=\textwidth, keepaspectratio=true]{Figures/coriumCrust_15000.png}
+\caption{Croûte à t = 100 s (en haut) et à t = 15 000 s (en bas). \textit{L'indice dans la maille $C_j$ donne la couche de bain en face de celle-ci : 1 $\Leftrightarrow$ OX., -1 $\Leftrightarrow$ Vide}}
 \label{fig:croutes_1}
 \end{figure}
 
