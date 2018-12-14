@@ -6,20 +6,20 @@ Le domaine noté $\Omega_C$ occupé par la croûte est considéré 2D dans cette
 \caption{Schéma de la croûte couplée au bain de corium liquide et à la cuve} \label{fig:crust_figure}
 \end{figure}
 
-Le domaine $\Omega_C$ est discrétisé en 1D selon la direction verticale (selon l'axe noté $z$) de la croûte. Le maillage est décrit par $N_{noeuds}$ n\oe{}uds. Les $N_{mailles}=N_{noeuds}-1$ mailles rectangulaires correspondantes sont notées $C_j$ pour $1 \leq j\leq N_{mailles}$. Pour chaque maille, la direction horizontale est donnée par l'axe $x$. On note [$x_j^{min}, x_j^{max}$] le domaine occupé par la maille $j$ suivant l'axe $x$ et $S_j$ la surface de la face verticale (i.e. suivant l'axe $z$). On fixera, comme indiqué sur la figure \ref{fig:crust_figure}, $x_j^{min}=0,\forall j$, qui correspond à l'interface croûte/cuve.\\
+Le domaine $\Omega_C$ est discrétisé en 1D selon la direction verticale (selon l'axe noté $z$) de la croûte. Le maillage est décrit par $N_{noeuds}$ n\oe{}uds. Les $N_{mailles}=N_{noeuds}-1$ mailles rectangulaires correspondantes sont notées $C_j$ pour $1 \leq j\leq N_{mailles}$. Pour chaque maille, la direction horizontale est donnée par l'axe $x$. On note [$x_j^{min}, x_j^{max}$] le domaine occupé par la maille $j$ suivant l'axe $x$ et $S_j$ la surface de la face verticale (i.e. suivant l'axe $z$). On notera $e_j=x_j^{max}-x_j^{min}$ et on fixera, comme indiqué sur la figure \ref{fig:crust_figure}, $x_j^{min}=0,\forall j$, qui correspond à l'interface croûte/cuve.\\
 
 Les propriétés physiques liées à la croûte sont pour chaque maille $j$ : $\rho_j$ la densité, $\lambda^s_j$ la conductivité thermique, $h_j$ l'enthalpie spécifique, $\Delta {\cal H}_j^{fus}$ l'enthalpie de fusion et $T_j^{fus}$ (resp. $\temperature[sol]{l(j)}$) la température de ``fusion'' de la croûte (resp. la température de ``solidification'' du corium liquide associée à la couche située en face de la maille $j$). La température dans la maille $j$ est notée $T_j$.
 
-Sur la frontière $\gamma_{in}$, une partie de la croûte est en contact avec le corium liquide, elle est alors soumise à un flux $\phi_{bain}$ provenant du bain de corium liquide. Sur la frontière $\gamma_{ext}$, une condition de température imposée ($T_j=T_j^{ext}$) ou de flux imposé ($\phi_j=\phi_j^{ext}$) peut être définie.\\
+Sur la frontière $\gamma_{in}$, une partie de la croûte est en contact avec le corium liquide, elle est alors soumise à un flux $\phi_{bain}(z)$ provenant du bain de corium liquide. Sur la frontière $\gamma_{ext}$, une condition de température imposée ($T_j=T_j^{ext}$) ou de flux imposé ($\phi_j=\phi_j^{ext}$) peut être définie.\\
  
 A chaque pas de temps, le bain de corium peut changer de configuration (e.g. stratification, baisse ou élévation du niveau du bain). Ainsi, à chaque pas de temps le domaine occupé par la croûte est remaillé à partir d'un nombre de mailles de référence donné par l'utilisateur. Ce remaillage est réalisé en respectant les contraintes suivantes :
 \begin{itemize}
-    \item une maille ne peut voir qu'une seule couche du bain, ainsi cette maille recevra un flux thermique ne provenant que d'une seule couche
-    \item quelque soit l'épaisseur d'une couche du bain de corium, au moins une maille sera définie en face de cette couche
-    \item  Il peut apparaître éventuellement au cours d'un calcul une partie de l'interface $\gamma_{in}$ située plus haut que le niveau supérieure du bain de corium liquide (e.g. lorsque le niveau du bain baisse, une partie de la croûte ne voit plus le corium liquide). Dans ce cas, cette partie de la croûte sera conservée et une condition adiabatique sera considérée.\\
+    \item une maille ne peut voir qu'une seule couche du bain, ainsi cette maille recevra un flux thermique local $\phi_{bain}(z)$ ne provenant que d'une seule couche
+    \item quelle que soit l'épaisseur d'une couche du bain de corium, au moins une maille sera définie en face de cette couche
+    \item  Il peut apparaître éventuellement au cours d'un calcul une partie de l'interface $\gamma_{in}$ située plus haut que le niveau supérieur du bain de corium liquide (e.g. lorsque le niveau du bain baisse après une solidification, une partie de la croûte ne voit plus le corium liquide). Dans ce cas, cette partie de la croûte sera conservée et une condition adiabatique sera considérée sur les parties correspondantes de $\gamma_{in}$ et sur la frontière supérieure.\\
 \end{itemize}
 
-A chaque remaillage du domaine occupé par la croûte, une projection des masses et des températures est effectuée sur le nouveau maillage en assurant une conservation en masse et en énergie (voir section \ref{sect:couplage}).\\
+A chaque remaillage du domaine occupé par la croûte suite à son changement de configuration (la solidification ou la fusion de la croûte entraine une modification des épaisseurs des couches du bain), une projection des masses et des températures est effectuée sur le nouveau maillage en assurant une conservation en masse et en énergie (voir section \ref{sect:couplage}).\\
 
 Les quantités moyennes suivantes sont introduites pour $1 \leq j\leq N_{mailles}$ :
 \begin{eqnarray}
@@ -28,7 +28,7 @@ m_{j}(t) &=& \rho_j  V_j(t) \\
 \overline{\phi}_{j,in}(t) &=& \frac{1}{S_j}\int_{\gamma_{in}\cap S_j}\lambda_j^s \frac{\partial T_{j}}{\partial x}(x=x_j^{max},z,t)\, \mathrm{d}z  \label{eq:phi_j_in}\\
 \overline{\phi}_{j,ext}(t) &=& \frac{1}{S_j}\int_{\gamma_{ext}\cap S_j}\lambda_j^s \frac{\partial T_{j}}{\partial x} (x=x_j^{min},z,t)\, \mathrm{d}z  \label{eq:phi_j_ext}
 \end{eqnarray}
-avec $V_j$ le volume de la maille $j$. La température moyenne associée à l'enthalpie spécifique moyenne $\overline{h}_j(t)$ est notée $\overline{T}_{j}(t)$.
+avec $V_j$ le volume de la maille $j$, $m_{j}$ la masse de la croûte dans la maille $j$. Les quantités $\overline{\phi}_{j,in}$ et $\overline{\phi}_{j,ext}$ représentent les flux moyens associés respectivement aux frontières $\gamma_{in}$ et $\gamma_{ext}$ dans la maille $j$. La température moyenne associée à l'enthalpie spécifique moyenne $\overline{h}_j(t)$ est notée $\overline{T}_{j}(t)$.
 
 
 Le système (\ref{eq:mass})-(\ref{eq:enthalpie}) suivant donne l'évolution des masses et enthalpies spécifiques moyennes pour chaque maille $j$ :
@@ -43,8 +43,8 @@ où :
 
 \begin{itemize}
  \item $\frac{dm_j^\text{fus/sol}}{dt}$ est le débit de masse ablatée dans le cas d'une fusion de la croûte ou le débit de masse solidifiée dans le cas d'une solidification du corium liquide. Ce débit de masse est positif dans le cas d'une fusion et négatif dans le cas d'une solidification;
- \item $\overline{h}_{\gamma_{in},j}$ représente l'enthalpie spécifique à l’interface $\gamma_{in}$ ;
- \item $\dot{q}^m m_j$ représente la contribution de la puissance résiduelle ($W$) associée à la puissance résiduelle massique $\dot{q}^m$ ($W/kg$);
+ \item $\overline{h}_{\gamma_{in},j}$ représente l'enthalpie spécifique à l’interface $\gamma_{in}$;
+ \item $\dot{q}^m m_j$ représente la contribution de la puissance résiduelle ($W$) associée à la puissance résiduelle massique $\dot{q}^m$ ($W/kg$). La croûte étant constituée des espèces du bain, elle possède également une puissance résiduelle;
 \end{itemize}
 Dans ce système, la conduction axiale (i.e. suivant l'axe $z$) a été négligée. Il est à noter qu'une option est disponible dans le code pour prendre en compte une approximation numérique de flux thermique axial (\cite{Peybernes2018}). 
 
@@ -54,21 +54,21 @@ En fonction des valeurs atteintes par $T_j^{in}$, les fermetures associées au s
 
 \begin{itemize}
 \item {\it cas d'une pure conduction dans la croûte :}\\
-Tant que $\temperature[sol]{l(j)}<T_j^{in}<T_j^{fus}$, la fusion ou solidification de la maille de croûte $C_j$ n'a pas débuté :
+Tant que $\temperature[sol]{l(j)}<T_j^{in}<T_j^{fus}$, la fusion ou solidification de la maille de croûte $C_j$ n'a pas débuté (continuité des températures et des flux thermiques sans variation de masse) :
 \begin{eqnarray*}
-\frac{dm_j^\text{fus/sol}}{dt} &=& 0.0 \\
+\frac{dm_j^\text{fus/sol}}{dt} &=& 0 \\
 \overline{\phi}_{j,in} &=& \phi_{j,bain}
 \end{eqnarray*}
 
 \item {\it passage en fusion de la croûte :}\\
-Si $T_j^{in}$ atteint la température $T_j^{fus}$ ($T_j^{in}\ge T_j^{fus}$), la fusion de la maille $C_j$ commence suivant l'équation de front de fusion suivante (modèle de Stefan \cite{LeTellier2016}) :
+Si $T_j^{in}$ atteint la température $T_j^{fus}$ ($T_j^{in}\ge T_j^{fus}$), la fusion de la maille $C_j$ commence suivant l'équation de front de fusion suivante (modèle de Stefan \cite{LeTellier2016}) (continuité des températures et discontinuité des flux thermiques due au changement de phase avec variation de masse) :
 \begin{eqnarray*}
 \Delta \mathcal{H}_j^{fus} \frac{dm_j^\text{fus/sol}}{dt} &=& S_j\left(\phi_{j,bain} - \overline{\phi}_{j,in}\right) \\
 T_j^{in} &=& T_j^{fus}
 \end{eqnarray*}
 
 \item {\it passage en solidification du corium :}\\
-Si $T_j^{in}$ atteint la température $\temperature[sol]{l(j)}$ ($T_j^{in}\le \temperature[sol]{l(j)}$), la solidification du corium commence suivant l'équation du front de solidification suivante :
+Si $T_j^{in}$ atteint la température $\temperature[sol]{l(j)}$ ($T_j^{in}\le \temperature[sol]{l(j)}$), la solidification du corium commence suivant l'équation du front de solidification suivante (continuité des températures et discontinuité des flux thermiques due au changement de phase avec variation de masse) :
 \begin{eqnarray*}
 \Delta \mathcal{H}_j^{fus} \frac{dm_j^\text{fus/sol}}{dt} &=& S_j\left(\phi_{j,bain} - \overline{\phi}_{j,in}\right) \\
 T_j^{in} &=& \temperature[sol]{l(j)}
@@ -77,24 +77,24 @@ T_j^{in} &=& \temperature[sol]{l(j)}
 \item {\it passage en conduction pure après un arrêt d'une fusion/solidification :}\\
 Lorsque une maille $C_j$ est en fusion ou solidification, si $\frac{dm_i^\text{fus/sol}}{dt}$ s'annule, le front de fusion/solidification s'arrête. Et ainsi la maille $C_j$ devient en "conduction pure" :
 \begin{eqnarray*}
-\frac{dm_j^\text{fus/sol}}{dt} &=& 0.0 \\
-\phi_j^{in} &=& \phi_{j,bain}
+\frac{dm_j^\text{fus/sol}}{dt} &=& 0 \\
+\overline{\phi}_{j,in} &=& \phi_{j,bain}
 \end{eqnarray*}
 \end{itemize}
 
-Lors de la résolution, selon l'état de la maille $C_j$, il est nécessaire de compléter également l'équation d'énergie par des lois de de fermeture pour les quantités $\overline{\phi}_{j,in}$ et $\overline{\phi}_{j,ext}$. Pour ce faire, un modèle 0D basé sur l'hypothèse d'un profil quadratique suivant l'axe $x$ de la température permet de déduire ces flux $\overline{\phi}_{j,in}$ et $\overline{\phi}_{j,ext}$ \cite{LeTellier2016}.\\
+Lors de la résolution, selon l'état de la maille $C_j$, il est nécessaire de compléter également l'équation d'énergie par des lois de fermeture pour les quantités $\overline{\phi}_{j,in}$ et $\overline{\phi}_{j,ext}$. Pour ce faire, un modèle 0D basé sur l'hypothèse d'un profil quadratique suivant l'axe $x$ de la température permet de déduire ces flux $\overline{\phi}_{j,in}$ et $\overline{\phi}_{j,ext}$ \cite{LeTellier2016}.\\
 
-En pratique, à l'initialisation d'un calcul, un maillage de la croûte est défini à partir du nombre de mailles imposé par l'utilisateur et de la stratification du bain de corium. 
+En pratique, à l'initialisation d'un calcul, un maillage de la croûte est défini à partir du nombre de mailles imposé par l'utilisateur et de la stratification du bain de corium (on impose qu'une maille de croûte ne voit qu'une seule couche oxyde ou métal du bain). 
 
-Ce modèle associé à un problème de Stefan à deux phases ne permet pat de gérer de manière continue l'apparition du solide. Ainsi, à l'initialisation d'un calcul ou lorsque une nouvelle maille de croûte apparaît en cours de calcul suite à une modification de la hauteur du bain, cette nouvelle maille de croûte est occupée par un ``résidu'' de matériau dont l'épaisseur de la maille $e^0$ est fixée par un paramètre utilisateur. La masse $m_j^0$ est déduite à partir de cette épaisseur et de la densité du matériau. On suppose qu'à l'initialisation de la maille de croûte la température a un profil quadratique de la forme : 
+Ce modèle associé à un problème de Stefan à deux phases ne permet pas de gérer de manière continue l'apparition du solide (qui nécessite une modélisation plus complexe). Ainsi, à l'initialisation d'un calcul ou lorsque une nouvelle maille de croûte apparaît en cours de calcul suite à une modification de la hauteur du bain, cette nouvelle maille de croûte est occupée par un ``résidu'' de matériau dont l'épaisseur de la maille $e_j^0=e_j(t_0)$ est fixée par un paramètre utilisateur. La masse initiale $m_j^0=m_j(t_0)$ est déduite à partir de cette épaisseur et de la densité du matériau. On suppose qu'à l'initialisation de la maille de croûte la température a un profil quadratique de la forme : 
 $$T_j(x)=ax^2+bx+c.$$
-En plus des deux conditions limites en $x=x_j^{min}=0$ et $x=e^0$ en température, on impose un flux de chaleur externe initial nul, i.e. $\frac{\mathrm{d}T_j}{\mathrm{d}x}(x_j^{min}) = 0$ lors de cette initialisation.
+En plus des deux conditions limites en $x=x_j^{min}=0$ et $x_j^{max}=e_j^0$ en température, on impose un flux de chaleur externe initial nul, i.e. $\frac{\mathrm{d}T_j}{\mathrm{d}x}(x_j^{min}) = 0$ lors de cette initialisation.
 
-À partir de ces trois contraintes, les coefficients $a$, $b$ et $c$ sont calculés. Par exemple pour une température fixée côté cuve en $x=0$ $(T_j^{ext})$ et une température de fusion fixée $T_j^{fus}$ en $x=e^0$ côté bain, ces coefficients obtenus prennent la forme :
+À partir de ces trois contraintes, les coefficients $a$, $b$ et $c$ sont calculés. Par exemple pour une température fixée côté cuve en $x=0$ $(T_j^{ext})$ et une température de fusion fixée $T_j^{fus}$ en $x=e_j^0$ côté bain, ces coefficients obtenus prennent la forme :
 \begin{eqnarray*}
 c &=& T^{ext}_j \\
 b &=& 0 \\
-a &=& \frac{T_j^{fus}-T^{ext}_j}{({e^0})^2}
+a &=& \frac{T_j^{fus}-T^{ext}_j}{({e_j^0})^2}
 \end{eqnarray*}
 et la température moyenne initiale de la maille $j$ est ainsi donnée par :
-$$\overline{T}_{j}=\frac{a}{3} ({e^0})^2 + \frac{b}{2} e^0 + c$$
+$$\overline{T}_{j}(t_0)=\frac{a}{3} ({e_j^0})^2 + \frac{b}{2} e_j^0 + c$$

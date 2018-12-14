@@ -98,7 +98,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Definition du Numero reference du document  %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\setnumero{2018-024}
+\setnumero{2018-026}
 %% |  PAGE 2: Fiche Documentaire 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Definition du type de diffusion     %%
@@ -154,7 +154,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Definition des mots clefs de la page 3  %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\setmotscles{corium en cuve, croûte, bain de corium, couplage}
+\setmotscles{corium en cuve, croûte, bain de corium, PROCOR, couplage}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Definition du resume de la page 3       %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -176,33 +176,35 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \setdiffusioninterne{
      \begin{tabular}[!H]{ll}
-    \underline{Document complet}:\\
+%    \underline{Document complet}:\\
     CEA/DEN/CAD/DTN/SMTA/LMAG & Tous \\
     %CEA/DEN/CAD/DTN/SMTA/LEAG & J.~DELACROIX, A.~PIVANO, P.~PILUSO \\
     %CEA/DEN/DANS/DPC/SCCME/LM2T & C.~GUENEAU, A.~QUAINI  \\
     CEA/DEN/CAD/DTN/SMTA & D.~PECHEUR, C~.VALOT \\
     CEA/DTN & S.~DUBOIS \\
-    CEA/DISN & P.~DUMAZ
+    CEA/DISN & P.~DUMAZ \\
+    DPIE/SA2P & O.~RAQUET
 \\
 %     CEA/DEN/CAD/DPIE/SA2P & J. BROCHARD
 % \\  
-    EDF/7N & G.~FLEURY, B.~TOURNIAIRE pour distribution EDF/7N \\
-    EDF Lab & K.~ATKHEN, A.~LE BELGUET pour distribution EDF Lab \\
-    Framatome & C.~CARDON, M.~LECOMTE pour distribution Framatome 
+    EDF/DIPNN/DT & B.~TOURNIAIRE, G.~FLEURY, T.~CONTI \\
+    EDF/R\&D & E.~SAUVAGE, K.~ATKHEN, A.~LE BELGUET \\
+    Framatome & A.~CAILLAUX, P.~GANDRILLE, C.~CARDON, M.~LECOMTE \\
+    Framatome & G\_FRA\_TRIPARTITE\_CEA\_EDF@Framatome.com
 \\
-    \\
-    \underline{Copie}:\\
+%    \\
+%    \underline{Copie}:\\
     CEA/DTN/CAD/DTN/DIR & C.~DELLIS, C.~TRUFFIER \\
     CEA/DTN/CAD/DTN/STCP & O.~GASTALDI \\                                                   
     CEA/DEN/CAD/DTN/SMTA/LEAG & C.~SUTEAU \\                                                 
     CEA/DEN/CAD/DTN/SMTA/LMCT & J. P.~FERAUD \\                                                       
     CEA/DEN/CAD/DTN/SMTA/LMTE & F.~JOURDAIN \\                                                  
     CEA/DEN/CAD/DTN/SMTA/LMN & F.~JALLU \\ 
-    CEA/DEN/DANS/DPC/SCCME/LM2T & S.~GOSSE \\
-    EDF & E.~SAUVAGE
-\\
-    Framatome & A.~CAILLAUX
-\\
+    CEA/DEN/DANS/DPC/SCCME/LM2T & S.~GOSSE 
+%    EDF & dd 
+%\\
+%    Framatome & dd
+%\\
 \end{tabular}
 }
 %% 
@@ -231,8 +233,8 @@ L'objectif de cette section est de présenter la modélisation liée à la gesti
 \subsection{Couplage avec le bain de corium}\label{sect:couplage}
 \input{Couplage}
 \section{Résultats numériques} \label{sect:num}
-Sont présentés ici les résultats d'un test de vérification du modèle qui en illustre les principales caractéristiques. Le couplage entre le modèle du bain de corium et le modèle de croûte est testé au travers de deux transitoires détaillés ci-après dans les deux premières sections. Dans la dernière section, des cas de tests des problèmes identifiés au travers du second transitoire sont décrits. Notons bien qu'il ne s'agit pas d'un cas d'application réacteur et que certains des conditions de ce calcul ont été choisies dans une logique de test ``unitaire'', pour, à la fois, amener le modèle dans ses différents états possibles et, à la fois, faciliter la vérification de son bon comportement. En conséquence, aucune comparaison au modèle de bain initial de PROCOR avec une croûte ``fictive'' n'est ici rapportée. Ce travail reste à faire et le sera en 2019 dans le cadre du projet IVMR avec une reprise des benchmarks étudiés dans \cite{Carenini2019} et une nouvelle série de calculs réacteurs dans le WP2.5.
-\input{ResultatsNumeriquesReduits}
+Sont présentés ici les résultats d'un test de vérification du modèle qui en illustre les principales caractéristiques. Notons qu'au préalable, des tests unitaires existent dans PROCOR pour les différentes projections et communications utilisées pour le couplage entre le bain et la croûte (détaillées dans la section \ref{sect:couplage}). Ce couplage est testé au travers de deux transitoires détaillés ci-après dans les deux premières sections \ref{sect:num1} et \ref{sect:transit}. Dans la dernière section \ref{sect:verif}, des cas de tests des problèmes identifiés au travers du second transitoire sont décrits. Notons bien qu'il ne s'agit pas d'un cas d'application réacteur et que certains des conditions de ce calcul ont été choisies dans une logique de test ``unitaire'', pour, à la fois, amener le modèle dans ses différents états possibles et, à la fois, faciliter la vérification de son bon comportement. En conséquence, aucune comparaison au modèle de bain initial de PROCOR avec une croûte ``fictive'' n'est ici rapportée. Ce travail reste à faire et le sera en 2019 dans le cadre du projet IVMR avec une reprise des benchmarks étudiés dans \cite{Carenini2019} et une nouvelle série de calculs réacteurs dans le WP2.5.
+\input{ResultatsNumeriquesReduits}\label{sect:resultats}
 \section{Conclusion} \label{sect:conclusion}
 \input{Conclusion.tex}
 
